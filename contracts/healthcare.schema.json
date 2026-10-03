@@ -1,0 +1,417 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:healthcare:source-contracts:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "insurance",
+    "hospitals",
+    "providers",
+    "diagnoses",
+    "procedures",
+    "patients",
+    "visits",
+    "claims",
+    "claim_lines",
+    "prescriptions"
+  ],
+  "properties": {
+    "insurance": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/insurance"
+      }
+    },
+    "hospitals": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/hospitals"
+      }
+    },
+    "providers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/providers"
+      }
+    },
+    "diagnoses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/diagnoses"
+      }
+    },
+    "procedures": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/procedures"
+      }
+    },
+    "patients": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/patients"
+      }
+    },
+    "visits": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/visits"
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/claims"
+      }
+    },
+    "claim_lines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/claim_lines"
+      }
+    },
+    "prescriptions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/prescriptions"
+      }
+    }
+  },
+  "$defs": {
+    "insurance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "insurance_id",
+        "name"
+      ],
+      "properties": {
+        "insurance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "hospitals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hospital_id",
+        "name",
+        "hospital_type",
+        "region"
+      ],
+      "properties": {
+        "hospital_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hospital_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "region": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "providers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider_id",
+        "specialty",
+        "hospital_id",
+        "state"
+      ],
+      "properties": {
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "specialty": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hospital_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Z]{2}$"
+        }
+      }
+    },
+    "diagnoses": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "diagnosis_code",
+        "description"
+      ],
+      "properties": {
+        "diagnosis_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "procedures": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "procedure_code",
+        "description"
+      ],
+      "properties": {
+        "procedure_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "patients": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "patient_id",
+        "date_of_birth",
+        "gender",
+        "state",
+        "insurance_id",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "patient_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "date_of_birth": {
+          "type": "string",
+          "format": "date"
+        },
+        "gender": {
+          "type": "string",
+          "minLength": 1,
+          "enum": [
+            "F",
+            "M",
+            "Other",
+            "Unknown"
+          ]
+        },
+        "state": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Z]{2}$"
+        },
+        "insurance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "visits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "visit_id",
+        "patient_id",
+        "provider_id",
+        "hospital_id",
+        "visit_type",
+        "event_time",
+        "diagnosis_code"
+      ],
+      "properties": {
+        "visit_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patient_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hospital_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "visit_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "diagnosis_code": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "patient_id",
+        "visit_id",
+        "status",
+        "billed",
+        "allowed",
+        "paid",
+        "updated_at"
+      ],
+      "properties": {
+        "claim_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patient_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "visit_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1,
+          "enum": [
+            "Approved",
+            "Rejected",
+            "Pending"
+          ]
+        },
+        "billed": {
+          "type": "number",
+          "minimum": 0
+        },
+        "allowed": {
+          "type": "number",
+          "minimum": 0
+        },
+        "paid": {
+          "type": "number",
+          "minimum": 0
+        },
+        "rejection_reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "claim_lines": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_line_id",
+        "claim_id",
+        "procedure_code",
+        "units",
+        "amount"
+      ],
+      "properties": {
+        "claim_line_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "procedure_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "units": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "prescriptions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prescription_id",
+        "patient_id",
+        "provider_id",
+        "medicine",
+        "dosage",
+        "date"
+      ],
+      "properties": {
+        "prescription_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patient_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "medicine": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dosage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  }
+}
